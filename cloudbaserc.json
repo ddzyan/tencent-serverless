@@ -10,7 +10,12 @@
       "envVariables": {},
       "runtime": "Nodejs10.15",
       "memorySize": 128,
-      "handler": "index.main"
+      "handler": "index.main",
+      "ignore": [
+        "*.md",
+        "node_modules",
+        "node_modules/**/*"
+      ]
     }
   ],
   "framework": {

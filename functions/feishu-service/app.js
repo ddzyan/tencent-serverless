@@ -1,7 +1,6 @@
 const express = require("express");
 require("express-async-errors");
 
-const logger = require("./common/logger");
 const router = require("./router");
 const requestLog = require("./middleware/requestLog");
 
@@ -17,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", router);
 
 app.use((err, req, res, next) => {
-  logger.error(err.message, err);
+  console.error(err.message, err);
   if (req.xhr) {
     return res.json({
       state: false,
