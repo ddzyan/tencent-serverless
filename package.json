@@ -4,8 +4,13 @@
   "description": "<a href=\"https://github.com/TencentCloudBase/cloudbase-templates\"><img src=\"https://main.qcloudimg.com/raw/7b50431d8cef29d9ebb82c4ff2e6032c.png\"></a>",
   "main": "index.js",
   "scripts": {
-    "deploy": "tcb fn deploy"
+    "deploy": "tcb fn deploy",
+    "dev": "node-dev -r dotenv/config bin/main.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "node-dev": "^7.0.0"
+  }
 }

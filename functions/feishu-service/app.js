@@ -27,6 +27,4 @@ app.use((err, req, res, next) => {
   return res.send(err.message);
 });
 
-app.listen(3000, function () {
-  console.log("服务启动");
-});
+module.exports = app;
