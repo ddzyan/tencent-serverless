@@ -1,0 +1,26 @@
+{
+  "name": "feishu-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node-dev -r dotenv/config ./app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.7.1",
+    "axios": "^0.22.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "log4js": "^6.3.0",
+    "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "node-dev": "^7.0.0",
+    "prettier": "^2.4.1"
+  }
+}
