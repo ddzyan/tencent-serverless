@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "tcb fn deploy",
-    "dev": "node-dev -r dotenv/config bin/main.js"
+    "dev": "node-dev -r dotenv/config bin/main"
   },
   "author": "",
   "license": "ISC",
