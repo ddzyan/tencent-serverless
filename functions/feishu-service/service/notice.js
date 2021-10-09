@@ -24,7 +24,7 @@ class NoticeService {
       })
       .get();
 
-    if (res) {
+    if (res.data.length > 0) {
       throw new Error("关键字已经存在");
     }
 
@@ -36,7 +36,7 @@ class NoticeService {
 
   async eventCallback(params) {
     const { uuid, event } = params;
-    const { message_id, msg_type, text, open_id } = event;
+    const { message_id, msg_type, text, open_chat_id } = event;
     let keyword;
     if (msg_type === MESSAGE_TYPE.TEXT) {
       keyword = text;
@@ -49,9 +49,10 @@ class NoticeService {
       })
       .get();
 
-    answer = answer.data.length > 0 ? answer.data[0] : "未找到匹配结果";
+    console.log("collection", answer);
+    answer = answer.data.length > 0 ? answer.data[0].content : "未找到匹配结果";
 
-    await this.sendMsg(RECEIVE_ID_TYPE.OPEN_ID, open_id, answer);
+    await this.sendMsg(RECEIVE_ID_TYPE.CHAT_ID, open_chat_id, answer);
     return true;
   }
 
