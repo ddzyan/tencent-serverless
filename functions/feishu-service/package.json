@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node-dev -r dotenv/config ./app.js"
+    "dev": "node-dev -r dotenv/config ./app.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "@cloudbase/node-sdk": "^2.7.1",
     "axios": "^0.22.0",
+    "dayjs": "^1.10.7",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "log4js": "^6.3.0",

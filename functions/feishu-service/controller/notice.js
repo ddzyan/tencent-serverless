@@ -1,10 +1,22 @@
 const noticeService = require("../service/notice");
-
+const { URL_TYPE } = require("../enum");
 class CallBackController {
   async callback(req, res, next) {
     const params = req.body;
-    const result = await noticeService.callback(params);
-    return res.send(result);
+    const { type, challenge } = params;
+    if (type === URL_TYPE.URL_VERIFICATION) {
+      return res.send({
+        challenge,
+      });
+    } else if (type === URL_TYPE.EVENT_CALLBACK) {
+      await noticeService.eventCallback(params);
+      return res.send({
+        state: true,
+        msg: "发送成功",
+      });
+    }
+
+    throw new Error("没有匹配的事件");
   }
 
   async addContent(req, res, next) {

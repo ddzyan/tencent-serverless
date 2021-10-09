@@ -1,4 +1,6 @@
 const cloudbase = require("@cloudbase/node-sdk");
+const { MESSAGE_TYPE, SENDER_TYPE, RECEIVE_ID_TYPE } = require("../enum");
+const feishu = require("../lib/feishu");
 
 const { SECRET_ID, SECRET_KEY } = process.env;
 
@@ -11,15 +13,10 @@ const cloudClient = cloudbase.init({
 const COLLECTION = "service";
 
 const db = cloudClient.database();
-
-const URL_TYPE = {
-  URL_VERIFICATION: "url_verification",
-};
+const _ = db.command;
 
 class NoticeService {
   async addContent(keyword, content) {
-    const _ = db.command;
-
     const res = await db
       .collection(COLLECTION)
       .where({
@@ -37,14 +34,36 @@ class NoticeService {
     });
   }
 
-  async callback(params) {
-    const { type } = params;
-    if (type === URL_TYPE.URL_VERIFICATION) {
-      // 地址验证
-      const { challenge } = params;
-      if (!challenge) throw new Error("缺少必要challenge");
-      return challenge;
+  async eventCallback(params) {
+    const { uuid, event } = params;
+    const { message_id, msg_type, text, open_id } = event;
+    let keyword;
+    if (msg_type === MESSAGE_TYPE.TEXT) {
+      keyword = text;
     }
+
+    let answer = await db
+      .collection(COLLECTION)
+      .where({
+        keyword: _.eq(keyword),
+      })
+      .get();
+
+    answer = answer.data.length > 0 ? answer.data[0] : "未找到匹配结果";
+
+    await this.sendMsg(RECEIVE_ID_TYPE.OPEN_ID, open_id, answer);
+    return true;
+  }
+
+  async sendMsg(receiveIdType, receiveId, content) {
+    const res = await feishu.sendMsg({
+      receiveIdType,
+      receiveId,
+      content,
+      msg_type: MESSAGE_TYPE.TEXT,
+    });
+
+    return res;
   }
 }
 
