@@ -2,6 +2,7 @@ const noticeService = require("../service/notice");
 const { URL_TYPE } = require("../enum");
 class CallBackController {
   async callback(req, res, next) {
+    console.log(JSON.stringify(req.body));
     const params = req.body;
     const { type, challenge } = params;
     if (type === URL_TYPE.URL_VERIFICATION) {

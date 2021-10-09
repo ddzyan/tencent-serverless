@@ -5,6 +5,7 @@ const URL_TYPE = {
 
 const MESSAGE_TYPE = {
   TEXT: "text",
+  MESSAGE: "message",
 };
 
 const SENDER_TYPE = {

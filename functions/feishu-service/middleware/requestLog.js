@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
   }
 
   let t = new Date();
-  console.info(req.method, req.url, req.ip, JSON.stringify(req.body));
+  console.info(req.method, req.url, req.ip);
   res.on("finish", () => {
     let duration = new Date() - t;
 

@@ -36,10 +36,19 @@ class NoticeService {
 
   async eventCallback(params) {
     const { uuid, event } = params;
-    const { message_id, msg_type, text, open_chat_id } = event;
+    const { message_id, msg_type, text, text_without_at_bot, open_chat_id } =
+      event;
     let keyword;
-    if (msg_type === MESSAGE_TYPE.TEXT) {
-      keyword = text;
+    switch (msg_type) {
+      case MESSAGE_TYPE.TEXT:
+        keyword = text_without_at_bot.trim();
+        break;
+      case MESSAGE_TYPE.MESSAGE:
+        keyword = text_without_at_bot.trim();
+        break;
+
+      default:
+        break;
     }
 
     let answer = await db
@@ -49,7 +58,7 @@ class NoticeService {
       })
       .get();
 
-    console.log("collection", answer);
+    console.log(`collection ${keyword}`, answer);
     answer = answer.data.length > 0 ? answer.data[0].content : "未找到匹配结果";
 
     await this.sendMsg(RECEIVE_ID_TYPE.CHAT_ID, open_chat_id, answer);
