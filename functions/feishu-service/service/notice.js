@@ -12,6 +12,10 @@ const COLLECTION = "service";
 
 const db = cloudClient.database();
 
+const URL_TYPE = {
+  URL_VERIFICATION: "url_verification",
+};
+
 class NoticeService {
   async addContent(keyword, content) {
     const _ = db.command;
@@ -31,6 +35,16 @@ class NoticeService {
       keyword: [keyword],
       content,
     });
+  }
+
+  async callback(params) {
+    const { type } = params;
+    if (type === URL_TYPE.URL_VERIFICATION) {
+      // 地址验证
+      const { challenge } = params;
+      if (!challenge) throw new Error("缺少必要challenge");
+      return challenge;
+    }
   }
 }
 

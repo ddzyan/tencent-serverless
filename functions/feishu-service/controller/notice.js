@@ -2,11 +2,9 @@ const noticeService = require("../service/notice");
 
 class CallBackController {
   async callback(req, res, next) {
-    console.log(req.body);
-    return res.send({
-      state: true,
-      msg: "hello word",
-    });
+    const params = req.body;
+    const result = await noticeService.callback(params);
+    return res.send(result);
   }
 
   async addContent(req, res, next) {
